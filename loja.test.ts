@@ -3,7 +3,7 @@ import { Loja } from './loja';
 
 function verificaCampoObrigatorio(mensagemEsperada: string, loja: Loja) {
   try {
-    loja.dados_loja();
+    loja.validar_campos_obrigatorios();
   } catch (e) {
     expect(e.message).toBe(mensagemEsperada);
   }
@@ -92,7 +92,8 @@ Bai 1 - Mun 1 - E1
 CEP:11111-111 Tel (11) 1111-1111
 Obs 1
 CNPJ: 11.111.111/1111-11
-IE: 123456789`
+IE: 123456789
+`
 
 const TEXTO_ESPERADO_SEM_NUMERO_SEM_COMPLEMENTO_SEM_BAIRRO: string = `Loja 1
 Log 1, s/n
@@ -100,7 +101,8 @@ Mun 1 - E1
 CEP:11111-111 Tel (11) 1111-1111
 Obs 1
 CNPJ: 11.111.111/1111-11
-IE: 123456789`
+IE: 123456789
+`
 
 
 test('Loja Completa', () => {
@@ -219,18 +221,18 @@ test('Número zero, complemento e bairro vazios', () => {
 test('Exercício 2 - customizado', () => {
 
   // Defina seus próprios valores para as variáveis a seguir
-  let nome_loja = "";
-  let logradouro = "";
-  let numero = 0;
+  let nome_loja = "LOJAS AMERICANAS S.A.";
+  let logradouro = "R SACADURA CABRAL";
+  let numero = 102;
   let complemento = "";
-  let bairro = "";
-  let municipio = "";
-  let estado = "";
-  let cep = "";
-  let telefone = "";
-  let observacao = "";
-  let cnpj = "";
-  let inscricao_estadual = "";
+  let bairro = "GAMBOA";
+  let municipio = "RIO DE JANEIRO";
+  let estado = "RJ";
+  let cep = "20.221-160";
+  let telefone = "(21) 2206-6708";
+  let observacao = "47.11-3-02 Comercio varejista de mercadorias em geral";
+  let cnpj = "33.014.556/0001-96";
+  let inscricao_estadual = "85.687.08-5";
 
   let loja_customizada: Loja = new Loja(nome_loja, logradouro, numero,
     complemento, bairro, municipio, estado, cep, telefone, observacao, cnpj,
@@ -238,6 +240,12 @@ test('Exercício 2 - customizado', () => {
 
   //E atualize o texto esperado abaixo
   expect(loja_customizada.dados_loja()).toBe(
-      `
+      `LOJAS AMERICANAS S.A.
+R SACADURA CABRAL, 102
+GAMBOA - RIO DE JANEIRO - RJ
+CEP:20.221-160 Tel (21) 2206-6708
+47.11-3-02 Comercio varejista de mercadorias em geral
+CNPJ: 33.014.556/0001-96
+IE: 85.687.08-5
 `);
 });
